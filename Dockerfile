@@ -1,14 +1,10 @@
-# Dockerfile for prod builds
-
-# BUILD PHASE
-FROM node:12-alpine
+FROM node:alpine
 WORKDIR '/app'
 COPY package*.json ./
 RUN npm install
-COPY ./ ./
+COPY . .
 RUN npm run build
 
-# RUN PHASE
 FROM nginx
 EXPOSE 80
 COPY --from=0 /app/build /usr/share/nginx/html
